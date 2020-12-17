@@ -1,0 +1,61 @@
+{
+    "rootDir": "./",
+    "clearMocks": true,
+    "resetMocks": true,
+    "moduleDirectories": [
+        "node_modules",
+        "<rootDir>/src/js",
+        "<rootDir>/__test__",
+        "<rootDir>"
+    ],
+    "moduleFileExtensions": [
+        "js",
+        "jsx",
+        "json"
+    ],
+    "globalSetup": "<rootDir>/touglobal-setup.js",
+    "setupFiles": [
+        "jest-date-mock"
+    ],
+    "setupFilesAfterEnv": [
+        "jest-extended",
+        "jest-chain",
+        "@testing-library/jest-dom/extend-expect",
+        "<rootDir>/jest/setup-after-env.js"
+    ],
+    "testPathIgnorePatterns": [
+        "/src/.+(int|e2e).(spec|test).(t|j)s(x)?"
+    ],
+    "moduleNameMapper": {
+        "\\.scss$": "identity-obj-proxy",
+        "\\.svg": "<rootDir>/mapSvg.js"
+    },
+    "watchPlugins": [
+        "jest-watch-typeahead/filename",
+        "jest-watch-typeahead/testname"
+    ],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+        "<rootDir>/src/js/**/*.{js,jsx,ts,tsx}"
+    ],
+    "coverageReporters": [
+        "json",
+        "lcov",
+        "text-summary",
+        "json-summary"
+    ],
+    "reporters": [
+        "default",
+        [
+            "<rootDir>/threshold-reporter.js",
+            {
+                "tolerance": 5,
+                "roundDown": true,
+                "configLocation": "<rootDir>/jest.config.json"
+            }
+        ]
+    ],
+    "transform": {
+        "^.+\\.svg$": "jest-svg-transformer"
+    }
+}
