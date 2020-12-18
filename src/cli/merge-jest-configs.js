@@ -17,8 +17,8 @@ export const mergeJestConfigs = () => {
     const projectConfig = JSON.parse(fs.readFileSync(jestConfig, "utf-8"));
 
     const mergedConfigs = merge(defaultConfig, {
-      rootDir: process.env.PWD,
       ...clone(isPackageJson ? projectConfig.jest : projectConfig),
+      rootDir: process.env.PWD,
     });
 
     fs.writeFileSync(
