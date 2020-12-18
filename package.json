@@ -5,11 +5,12 @@
   "bin": {
     "otis": "bin/cli.js"
   },
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "dev": "WATCH=true node parcel.bundler.js",
     "build": "node parcel.bundler.js",
-    "publish": "npm publish --access public"
+    "publish": "npm publish --access public",
+    "test": "ls -asl"
   },
   "repository": {
     "type": "git",
@@ -26,22 +27,30 @@
   },
   "homepage": "https://github.com/tsw38/otis#readme",
   "devDependencies": {
+    "@babel/core": "7.12.10",
+    "@babel/preset-react": "7.12.10",
+    "deepmerge": "4.2.2",
     "eslint": "7.15.0",
     "eslint-plugin-jest": "24.1.3",
     "husky": "4.3.6",
     "parcel-bundler": "1.12.4",
+    "parcel-plugin-shebang": "1.3.1",
+    "parcel-plugin-static-files-copy": "2.5.0",
     "prettier": "2.2.1"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@babel/plugin-transform-react-jsx": "7.12.11",
     "@babel/preset-env": "7.12.11",
-    "@babel/preset-react": "7.12.10",
     "@jackfranklin/test-data-bot": "1.3.0",
     "@react-mock/localstorage": "0.1.2",
     "@testing-library/cypress": "7.0.2",
     "@testing-library/jest-dom": "5.11.6",
     "@testing-library/react": "11.2.2",
     "@testing-library/user-event": "12.6.0",
+    "@tsw38/custom-logger": "1.0.5",
+    "chalk": "4.1.0",
+    "cypress": "6.1.0",
+    "identity-obj-proxy": "3.0.0",
     "jest": "26.6.0",
     "jest-axe": "4.1.0",
     "jest-chain": "1.1.5",
@@ -49,13 +58,35 @@
     "jest-extended": "0.11.5",
     "jest-svg-transformer": "1.0.0",
     "jest-watch-typeahead": "0.6.1",
-    "chalk": "4.1.0",
-    "cypress": "6.1.0",
-    "identity-obj-proxy": "3.0.0",
     "minimist": "1.2.5",
-    "msw": "0.24.2"
+    "msw": "0.24.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
   },
-  "dependencies": {
-    "minimist": "1.2.5"
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
+    ]
+  },
+  "shebang": [
+    {
+      "interpreter": "node",
+      "files": [
+        "./bin/cli.js"
+      ]
+    }
+  ],
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "./src/test",
+        "staticOutDir": "../lib"
+      }
+    ],
+    "watcherGlob": "**"
   }
 }
