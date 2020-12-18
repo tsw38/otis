@@ -4,198 +4,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // modules are defined as an array
 // [ module function, map of requires ]
 //
@@ -321,12 +129,11 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.unitTestWatch = exports.unitTest = exports.test = exports.init = void 0;
+exports.unitTestWatch = exports.unitTest = exports.test = void 0;
 
 const argv = require("minimist")(process.argv.slice(2));
 
 const availableArgs = {
-  init: "init",
   test: "test"
 };
 const availableOptions = {
@@ -336,10 +143,6 @@ const availableOptions = {
 };
 
 const findMatchingOption = option => argv[option.replace(/\-/g, "")];
-
-const init = argv._.includes(availableArgs.init);
-
-exports.init = init;
 
 const test = argv._.includes(availableArgs.test);
 
@@ -357,13 +160,11 @@ module.exports = {
     "\\.(svg|css)$": "@tsw38/otis/lib/map-to-string"
   },
   "setupFilesAfterEnv": ["@tsw38/otis/lib/extend-expect"],
-  "reporters": ["default", ["@tsw38/otis/lib/threshold-ratchet", {
-    "tolerance": 10,
-    "roundDown": true
-  }]],
+  "reporters": ["default"],
   "coverageDirectory": "coverage",
   "collectCoverageFrom": ["<rootDir>/src/**/*.{js,jsx}"],
-  "coverageReporters": ["json", "lcov", "text-summary", "json-summary"]
+  "coverageReporters": ["json", "lcov", "text-summary", "json-summary"],
+  "watchPlugins": ["@tsw38/otis/lib/watch-typeahead-filename", "@tsw38/otis/lib/watch-typeahead-testname"]
 };
 },{}],"get-jest-config.js":[function(require,module,exports) {
 "use strict";
@@ -402,6 +203,12 @@ const fs = require("fs");
 
 const merge = require("deepmerge");
 
+const clone = require("clone-deep");
+
+/**
+ * writes a merge jest config into temporary scratch
+ * @returns void
+ */
 const mergeJestConfigs = () => {
   const jestConfig = (0, _getJestConfig.getJestConfig)();
   const isPackageJson = jestConfig.includes("package.json");
@@ -409,10 +216,9 @@ const mergeJestConfigs = () => {
   if (fs.existsSync(jestConfig)) {
     const projectConfig = JSON.parse(fs.readFileSync(jestConfig, "utf-8"));
     const mergedConfigs = merge(_jestConfig.default, {
-      rootDir: process.env.PWD
-    }, isPackageJson ? projectConfig.jest : projectConfig); // console.log(`${process.env.TMPDIR}jest.config.json`);
-    // console.log(mergedConfigs);
-
+      rootDir: process.env.PWD,
+      ...clone(isPackageJson ? projectConfig.jest : projectConfig)
+    });
     fs.writeFileSync(`${process.env.TMPDIR}/jest.config.json`, JSON.stringify(mergedConfigs), "utf-8");
   }
 };
@@ -463,21 +269,9 @@ module.exports = {
 
 "use strict";
 
-var _customLogger = _interopRequireDefault(require("@tsw38/custom-logger"));
-
 var _commands = require("./commands.js");
 
 var _unit = require("./unit");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const Log = new _customLogger.default({
-  header: "Otis"
-}).log;
-
-if (_commands.init) {
-  Log("Initializing Otis configurations");
-}
 
 if (_commands.unitTest) {
   (0, _unit.runUnitTests)();

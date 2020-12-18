@@ -1,5 +1,6 @@
 const fs = require("fs");
 const merge = require("deepmerge");
+const clone = require("clone-deep");
 
 import defaultConfig from "../../jest.config.json";
 import { getJestConfig } from "./get-jest-config";
@@ -15,11 +16,10 @@ export const mergeJestConfigs = () => {
   if (fs.existsSync(jestConfig)) {
     const projectConfig = JSON.parse(fs.readFileSync(jestConfig, "utf-8"));
 
-    const mergedConfigs = merge(
-      defaultConfig,
-      { rootDir: process.env.PWD },
-      isPackageJson ? projectConfig.jest : projectConfig
-    );
+    const mergedConfigs = merge(defaultConfig, {
+      rootDir: process.env.PWD,
+      ...clone(isPackageJson ? projectConfig.jest : projectConfig),
+    });
 
     fs.writeFileSync(
       `${process.env.TMPDIR}/jest.config.json`,

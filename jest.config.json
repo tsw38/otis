@@ -6,14 +6,7 @@
       "@tsw38/otis/lib/extend-expect"
     ],
     "reporters": [
-      "default",
-      [
-        "@tsw38/otis/lib/threshold-ratchet",
-        {
-          "tolerance": 10,
-          "roundDown": true
-        }
-      ]
+      "default"
     ],
     "coverageDirectory": "coverage",
     "collectCoverageFrom": [
@@ -24,5 +17,9 @@
       "lcov",
       "text-summary",
       "json-summary"
+    ],
+    "watchPlugins": [
+      "@tsw38/otis/lib/watch-typeahead-filename",
+      "@tsw38/otis/lib/watch-typeahead-testname"
     ]
   }

@@ -1,7 +1,6 @@
 const argv = require("minimist")(process.argv.slice(2));
 
 const availableArgs = {
-  init: "init",
   test: "test",
 };
 
@@ -13,7 +12,6 @@ const availableOptions = {
 
 const findMatchingOption = (option) => argv[option.replace(/\-/g, "")];
 
-export const init = argv._.includes(availableArgs.init);
 export const test = argv._.includes(availableArgs.test);
 
 const runE2E = availableOptions.e2e.some(findMatchingOption);
