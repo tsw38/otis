@@ -13,16 +13,12 @@ const availableOptions = {
 
 const findMatchingOption = (option) => argv[option.replace(/\-/g, "")];
 
-const init = argv._.includes(availableArgs.init);
-const test = argv._.includes(availableArgs.test);
+export const init = argv._.includes(availableArgs.init);
+export const test = argv._.includes(availableArgs.test);
 
 const runE2E = availableOptions.e2e.some(findMatchingOption);
 const runUnit = availableOptions.unit.some(findMatchingOption);
 const runWatch = availableOptions.watch.some(findMatchingOption);
 
-module.exports = {
-  init,
-  test,
-  unitTest: test && runUnit && !runWatch,
-  unitTestWatch: test && runUnit && runWatch,
-};
+export const unitTest = test && runUnit && !runWatch;
+export const unitTestWatch = test && runUnit && runWatch;

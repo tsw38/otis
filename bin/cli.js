@@ -2,6 +2,200 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // modules are defined as an array
 // [ module function, map of requires ]
 //
@@ -122,6 +316,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"commands.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.unitTestWatch = exports.unitTest = exports.test = exports.init = void 0;
+
 const argv = require("minimist")(process.argv.slice(2));
 
 const availableArgs = {
@@ -138,16 +339,31 @@ const findMatchingOption = option => argv[option.replace(/\-/g, "")];
 
 const init = argv._.includes(availableArgs.init);
 
+exports.init = init;
+
 const test = argv._.includes(availableArgs.test);
 
+exports.test = test;
 const runE2E = availableOptions.e2e.some(findMatchingOption);
 const runUnit = availableOptions.unit.some(findMatchingOption);
 const runWatch = availableOptions.watch.some(findMatchingOption);
+const unitTest = test && runUnit && !runWatch;
+exports.unitTest = unitTest;
+const unitTestWatch = test && runUnit && runWatch;
+exports.unitTestWatch = unitTestWatch;
+},{}],"../../jest.config.json":[function(require,module,exports) {
 module.exports = {
-  init,
-  test,
-  unitTest: test && runUnit && !runWatch,
-  unitTestWatch: test && runUnit && runWatch
+  "moduleNameMapper": {
+    "\\.(svg|css)$": "@tsw38/otis/lib/map-to-string"
+  },
+  "setupFilesAfterEnv": ["@tsw38/otis/lib/extend-expect"],
+  "reporters": ["default", ["@tsw38/otis/lib/threshold-ratchet", {
+    "tolerance": 10,
+    "roundDown": true
+  }]],
+  "coverageDirectory": "coverage",
+  "collectCoverageFrom": ["<rootDir>/src/**/*.{js,jsx}"],
+  "coverageReporters": ["json", "lcov", "text-summary", "json-summary"]
 };
 },{}],"get-jest-config.js":[function(require,module,exports) {
 "use strict";
@@ -155,7 +371,7 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.getJestConfig = void 0;
 
 var _fs = _interopRequireDefault(require("fs"));
 
@@ -167,37 +383,67 @@ const getJestConfig = () => {
   return _fs.default.existsSync(jestConfigPath) ? jestConfigPath : `${PWD}/package.json`;
 };
 
-var _default = getJestConfig;
-exports.default = _default;
-},{}],"unit.js":[function(require,module,exports) {
+exports.getJestConfig = getJestConfig;
+},{}],"merge-jest-configs.js":[function(require,module,exports) {
 "use strict";
 
-var _getJestConfig = _interopRequireDefault(require("./get-jest-config"));
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.mergeJestConfigs = void 0;
+
+var _jestConfig = _interopRequireDefault(require("../../jest.config.json"));
+
+var _getJestConfig = require("./get-jest-config");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const fs = require("fs");
+
+const merge = require("deepmerge");
+
+const mergeJestConfigs = () => {
+  const jestConfig = (0, _getJestConfig.getJestConfig)();
+  const isPackageJson = jestConfig.includes("package.json");
+
+  if (fs.existsSync(jestConfig)) {
+    const projectConfig = JSON.parse(fs.readFileSync(jestConfig, "utf-8"));
+    const mergedConfigs = merge(_jestConfig.default, {
+      rootDir: process.env.PWD
+    }, isPackageJson ? projectConfig.jest : projectConfig); // console.log(`${process.env.TMPDIR}jest.config.json`);
+    // console.log(mergedConfigs);
+
+    fs.writeFileSync(`${process.env.TMPDIR}/jest.config.json`, JSON.stringify(mergedConfigs), "utf-8");
+  }
+};
+
+exports.mergeJestConfigs = mergeJestConfigs;
+},{"../../jest.config.json":"../../jest.config.json","./get-jest-config":"get-jest-config.js"}],"unit.js":[function(require,module,exports) {
 const {
   fork
 } = require("child_process");
 
 const log = require("@tsw38/custom-logger");
 
+const {
+  mergeJestConfigs
+} = require("./merge-jest-configs");
+
 const Log = new log({
   header: "Otis - Unit Tests"
 }).log;
 
-const buildFork = watching => {
-  const jestConfig = (0, _getJestConfig.default)();
-  return fork("node_modules/.bin/jest", ["--coverage", watching ? "--watch" : `--config=${jestConfig}`], {
-    env: { ...process.env,
-      NODE_ENV: "test",
-      JEST_TEST: true,
-      ...(watching ? {
-        DEBUG_PRINT_LIMIT: -1
-      } : {})
-    }
-  });
-};
+const buildFork = watching => new Promise(resolve => {
+  resolve(mergeJestConfigs());
+}).then(() => fork("node_modules/.bin/jest", [watching ? "--watch" : "--coverage", `--config=${process.env.TMPDIR}jest.config.json`], {
+  env: { ...process.env,
+    NODE_ENV: "test",
+    JEST_TEST: true,
+    ...(watching ? {
+      DEBUG_PRINT_LIMIT: -1
+    } : {})
+  }
+}));
 
 const runUnitTests = () => {
   Log("Running Unit Tests");
@@ -213,11 +459,9 @@ module.exports = {
   runUnitTests,
   runUnitTestsWatch
 };
-},{"./get-jest-config":"get-jest-config.js"}],"index.js":[function(require,module,exports) {
+},{"./merge-jest-configs":"merge-jest-configs.js"}],"index.js":[function(require,module,exports) {
 
 "use strict";
-
-var _child_process = require("child_process");
 
 var _customLogger = _interopRequireDefault(require("@tsw38/custom-logger"));
 

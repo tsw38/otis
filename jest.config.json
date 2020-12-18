@@ -1,0 +1,28 @@
+{
+    "moduleNameMapper": {
+      "\\.(svg|css)$": "@tsw38/otis/lib/map-to-string"
+    },
+    "setupFilesAfterEnv": [
+      "@tsw38/otis/lib/extend-expect"
+    ],
+    "reporters": [
+      "default",
+      [
+        "@tsw38/otis/lib/threshold-ratchet",
+        {
+          "tolerance": 10,
+          "roundDown": true
+        }
+      ]
+    ],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,jsx}"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text-summary",
+      "json-summary"
+    ]
+  }

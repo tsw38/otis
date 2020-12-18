@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { fork } from "child_process";
 
 import log from "@tsw38/custom-logger";
 
