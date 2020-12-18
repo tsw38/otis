@@ -12,7 +12,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "otis unit test",
+    "test": "otis test -u",
+    "test:watch": "npm t -- -w",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,7 +45,7 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(svg|css)$": "@tsw38/otis/lib/mapToString"
+      "\\.(svg|css)$": "@tsw38/otis/lib/map-to-string"
     },
     "setupFilesAfterEnv": [
       "@tsw38/otis/lib/extend-expect"
@@ -68,6 +69,14 @@
       "lcov",
       "text-summary",
       "json-summary"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 0,
+        "statements": 0,
+        "functions": 23,
+        "branches": 0
+      }
+    }
   }
 }

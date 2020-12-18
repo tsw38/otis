@@ -1,7 +1,19 @@
-// export * from "@testing-library/react";
-// const {
-//     render, waitFor, screen
-// }
+const render = require("./render.js");
+const server = require("./server.js");
+const presetEnv = require("./preset-env.js");
+const mapToString = require("./map-to-string.js");
+const presetReact = require("./preset-react.js");
+const extendExpect = require("./extend-expect.js");
+const thresholdRatchet = require("./threshold-ratchet.js");
+const pluginTransformReactJSX = require("./plugin-transform-react-jsx.js");
 
-// export { render, waitFor, screen } from "@testing-library/react";
-// export { default as mapToString } from "./mapToString";
+module.exports = {
+  ...render,
+  server,
+  presetEnv,
+  mapToString,
+  presetReact,
+  extendExpect,
+  thresholdRatchet,
+  pluginTransformReactJSX,
+};

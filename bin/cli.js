@@ -2,86 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // modules are defined as an array
 // [ module function, map of requires ]
 //
@@ -201,7 +121,35 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"get-jest-config.js":[function(require,module,exports) {
+})({"commands.js":[function(require,module,exports) {
+const argv = require("minimist")(process.argv.slice(2));
+
+const availableArgs = {
+  init: "init",
+  test: "test"
+};
+const availableOptions = {
+  e2e: ["-e", "--e2e"],
+  unit: ["-u", "--unit"],
+  watch: ["-w", "--watch"]
+};
+
+const findMatchingOption = option => argv[option.replace(/\-/g, "")];
+
+const init = argv._.includes(availableArgs.init);
+
+const test = argv._.includes(availableArgs.test);
+
+const runE2E = availableOptions.e2e.some(findMatchingOption);
+const runUnit = availableOptions.unit.some(findMatchingOption);
+const runWatch = availableOptions.watch.some(findMatchingOption);
+module.exports = {
+  init,
+  test,
+  unitTest: test && runUnit && !runWatch,
+  unitTestWatch: test && runUnit && runWatch
+};
+},{}],"get-jest-config.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -221,35 +169,51 @@ const getJestConfig = () => {
 
 var _default = getJestConfig;
 exports.default = _default;
-},{}],"commands.js":[function(require,module,exports) {
-const argv = require("minimist")(process.argv.slice(2));
+},{}],"unit.js":[function(require,module,exports) {
+"use strict";
 
-const availableArgs = {
-  e2e: "e2e",
-  init: "init",
-  test: "test",
-  unit: "unit",
-  watch: "watch"
+var _getJestConfig = _interopRequireDefault(require("./get-jest-config"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const {
+  fork
+} = require("child_process");
+
+const log = require("@tsw38/custom-logger");
+
+const Log = new log({
+  header: "Otis - Unit Tests"
+}).log;
+
+const buildFork = watching => {
+  const jestConfig = (0, _getJestConfig.default)();
+  return fork("node_modules/.bin/jest", ["--coverage", watching ? "--watch" : `--config=${jestConfig}`], {
+    env: { ...process.env,
+      NODE_ENV: "test",
+      JEST_TEST: true,
+      ...(watching ? {
+        DEBUG_PRINT_LIMIT: -1
+      } : {})
+    }
+  });
 };
 
-const init = argv._.includes(availableArgs.init);
+const runUnitTests = () => {
+  Log("Running Unit Tests");
+  buildFork();
+};
 
-const runE2E = argv._.includes(availableArgs.e2e);
-
-const runTest = argv._.includes(availableArgs.test);
-
-const runUnit = argv._.includes(availableArgs.unit);
-
-const runWatch = argv._.includes(availableArgs.watch);
+const runUnitTestsWatch = () => {
+  Log("Watching Unit Tests");
+  buildFork(true);
+};
 
 module.exports = {
-  initOtis: init,
-  testMode: runTest && !runWatch,
-  e2eTestMode: runE2E && !runWatch,
-  unitTestMode: runUnit && !runWatch,
-  unitWatchTestMode: runUnit && runWatch
+  runUnitTests,
+  runUnitTestsWatch
 };
-},{}],"index.js":[function(require,module,exports) {
+},{"./get-jest-config":"get-jest-config.js"}],"index.js":[function(require,module,exports) {
 
 "use strict";
 
@@ -257,9 +221,9 @@ var _child_process = require("child_process");
 
 var _customLogger = _interopRequireDefault(require("@tsw38/custom-logger"));
 
-var _getJestConfig = _interopRequireDefault(require("./get-jest-config"));
-
 var _commands = require("./commands.js");
+
+var _unit = require("./unit");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -267,45 +231,15 @@ const Log = new _customLogger.default({
   header: "Otis"
 }).log;
 
-if (_commands.initOtis) {
-  Log("Initializing Otis configurations", "info");
-} // import {unit, unitWatch} from './unit.js';
-
-
-if (_commands.testMode) {}
-
-if (_commands.unitTestMode) {
-  Log("Running Unit Tests", "info");
-  const jestConfig = (0, _getJestConfig.default)(); // const child = spawn("npx", ["jest", "--coverage", `--config=${jestConfig}`], {
-  //   detatched: false,
-  //   env: {
-  //     ...process.env,
-  //     NODE_ENV: "test",
-  //     JEST_TEST: true,
-  //     DEBUG_PRINT_LIMIT: -1,
-  //   },
-  // });
-
-  const forked = (0, _child_process.fork)("node_modules/.bin/jest", ["--coverage", `--config=${jestConfig}`], {
-    env: { ...process.env,
-      NODE_ENV: "test",
-      JEST_TEST: true,
-      DEBUG_PRINT_LIMIT: -1
-    }
-  }); // child.on("exit", (code) => {
-  //   console.log(`Child process exited with code ${code}`);
-  // });
-  // child.stdout.on("data", (data) => {
-  //   console.log("stdout");
-  //   console.log(`${data}`);
-  // });
-  // child.stderr.on("data", (data) => {
-  //   console.log("stderr");
-  //   console.log(`${data}`);
-  // });
+if (_commands.init) {
+  Log("Initializing Otis configurations");
 }
 
-if (_commands.unitWatchTestMode) {}
+if (_commands.unitTest) {
+  (0, _unit.runUnitTests)();
+}
 
-if (_commands.e2eTestMode) {}
-},{"./get-jest-config":"get-jest-config.js","./commands.js":"commands.js"}]},{},["index.js"], null)
+if (_commands.unitTestWatch) {
+  (0, _unit.runUnitTestsWatch)();
+}
+},{"./commands.js":"commands.js","./unit":"unit.js"}]},{},["index.js"], null)
