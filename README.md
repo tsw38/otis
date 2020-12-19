@@ -33,9 +33,9 @@ Having implemented testing in several projects I've noticed a very clear pattern
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
-    - [CLI](#usage-cli)
-    - [React](#usage-react)
-    - [Jest](#usage-jest)
+    - [CLI](#cli)
+    - [React](#react)
+    - [Jest](#jest)
 
 ## Installation
 
@@ -47,7 +47,7 @@ npm install --save-dev @tsw38/otis
 
 This package contains one binary executable, one module to use for tests and a couple of jest extensions to add to your testing experiences.
 
-### CLI {#usage-cli}
+### CLI
 
 #### `otis test`
 Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` file.
@@ -66,7 +66,7 @@ Examples:
 `otis test -u -w` <-- Runs unit tests in watch mode
 `otis test -e -w` <-- Runs e2e tests in watch mode `(cypress open)`
 
-### React {#usage-react}
+### React
 
 These exports are all reexports of these packages simply centralizing them all to one location, all documention can be found below.
 
@@ -97,7 +97,7 @@ test('', () => {
 })
 ```
 
-### Jest {#usage-jest}
+### Jest
 
 This package is a zero config extendable testing system, simply install  and you can get going. It will pick up whatever babel and jest configs you have in your application to add to the base defaults that are set up.
 
