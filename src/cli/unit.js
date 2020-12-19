@@ -1,9 +1,7 @@
 const { fork } = require("child_process");
-const log = require("@tsw38/custom-logger");
+const { log } = require("@tsw38/custom-logger");
 
 const { mergeJestConfigs } = require("./merge-jest-configs");
-
-const Log = new log({ header: "Otis - Unit Tests" }).log;
 
 const buildFork = (watching) =>
   new Promise((resolve) => {
@@ -27,12 +25,16 @@ const buildFork = (watching) =>
   );
 
 const runUnitTests = () => {
-  Log("Running Unit Tests");
+  log("Running Unit Tests", {
+    header: "Otis - Unit Tests",
+  });
   buildFork();
 };
 
 const runUnitTestsWatch = () => {
-  Log("Watching Unit Tests");
+  log("Watching Unit Tests", {
+    header: "Otis - Unit Tests",
+  });
   buildFork(true);
 };
 

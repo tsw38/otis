@@ -1,6 +1,6 @@
 {
   "name": "@tsw38/otis",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An opinionated React testing package",
   "bin": {
     "otis": "bin/cli.js"
@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "WATCH=true node parcel.bundler.js",
     "build": "node parcel.bundler.js",
-    "publish": "npm publish --access public",
-    "test": "ls -asl"
+    "prepublish": "npm run build",
+    "publish": "npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -47,10 +47,11 @@
     "@testing-library/jest-dom": "5.11.6",
     "@testing-library/react": "11.2.2",
     "@testing-library/user-event": "12.6.0",
-    "@tsw38/custom-logger": "1.0.6",
+    "@tsw38/custom-logger": "2.0.0",
     "chalk": "4.1.0",
     "cypress": "6.1.0",
     "identity-obj-proxy": "3.0.0",
+    "is-cli": "2.0.0",
     "jest": "26.6.0",
     "jest-axe": "4.1.0",
     "jest-chain": "1.1.5",

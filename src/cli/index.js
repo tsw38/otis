@@ -1,7 +1,13 @@
 #!/usr/bin/env node
-import { unitTest, unitTestWatch } from "./commands.js";
+import { help, unitTest, unitTestWatch } from "./commands.js";
 
 import { runUnitTests, runUnitTestsWatch } from "./unit";
+
+import logOtisOptions from "./log-options";
+
+if (help) {
+  logOtisOptions();
+}
 
 if (unitTest) {
   runUnitTests();

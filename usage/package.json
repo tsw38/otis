@@ -46,12 +46,20 @@
   "jest": {
     "reporters": [
       [
-        "@tsw38/otis/lib/threshold-ratchet",
+        "@tsw38/otis/lib/modules/threshold-ratchet",
         {
           "tolerance": 10,
           "roundDown": true
         }
       ]
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 0,
+        "statements": 0,
+        "functions": 23,
+        "branches": 0
+      }
+    }
   }
 }

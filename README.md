@@ -36,6 +36,7 @@ Having implemented testing in several projects I've noticed a very clear pattern
     - [CLI](#cli)
     - [React](#react)
     - [Jest](#jest)
+- [TODO](#todo)
 
 ## Installation
 
@@ -136,3 +137,7 @@ This package is a zero config extendable testing system, simply install  and you
     }
 }
 ```
+
+## TODO
+* Allow for multiple jest configs for a project (client | server)
+  - [Testing Javascript](https://testingjavascript.com/lessons/jest-support-running-multiple-configurations-with-jest-s-projects-feature)

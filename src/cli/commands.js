@@ -6,6 +6,7 @@ const availableArgs = {
 
 const availableOptions = {
   e2e: ["-e", "--e2e"],
+  help: ["-h", "--help"],
   unit: ["-u", "--unit"],
   watch: ["-w", "--watch"],
 };
@@ -20,3 +21,4 @@ const runWatch = availableOptions.watch.some(findMatchingOption);
 
 export const unitTest = test && runUnit && !runWatch;
 export const unitTestWatch = test && runUnit && runWatch;
+export const help = availableOptions.help.some(findMatchingOption);
