@@ -161,17 +161,17 @@ module.exports = {
   "moduleDirectories": ["node_modules", "<rootDir>/src", "<rootDir>/src/js", "<rootDir>/__test__", "<rootDir"],
   "moduleFileExtensions": ["js", "jsx", "json"],
   "moduleNameMapper": {
-    "\\.(svg|css)$": "@tsw38/otis/lib/map-to-string",
-    "\\.scss$": "@tsw38/otis/lib/identity-obj-proxy"
+    "\\.(svg|css)$": "@tsw38/otis/lib/modules/map-to-string",
+    "\\.scss$": "@tsw38/otis/lib/modules/identity-obj-proxy"
   },
-  "globalSetup": "@tsw38/otis/lib/global-setup",
-  "setupFiles": ["@tsw38/otis/lib/jest-date-mock"],
-  "setupFilesAfterEnv": ["@tsw38/otis/lib/jest-extended", "@tsw38/otis/lib/jest-chain", "@tsw38/otis/lib/rtl-extend-expect"],
+  "globalSetup": "@tsw38/otis/lib/modules/global-setup",
+  "setupFiles": ["@tsw38/otis/lib/modules/jest-date-mock"],
+  "setupFilesAfterEnv": ["@tsw38/otis/lib/modules/jest-extended", "@tsw38/otis/lib/modules/jest-chain", "@tsw38/otis/lib/modules/rtl-extend-expect"],
   "reporters": ["default"],
   "coverageDirectory": "coverage",
   "collectCoverageFrom": ["<rootDir>/src/**/*.{js,jsx,ts,tsx}"],
   "coverageReporters": ["json", "lcov", "text-summary", "json-summary"],
-  "watchPlugins": ["@tsw38/otis/lib/watch-typeahead-filename", "@tsw38/otis/lib/watch-typeahead-testname"],
+  "watchPlugins": ["@tsw38/otis/lib/modules/watch-typeahead-filename", "@tsw38/otis/lib/modules/watch-typeahead-testname"],
   "testPathIgnorePatterns": ["cypress/*", "/src/.+(int|e2e).(spec|test).(t|j)s(x)?"]
 };
 },{}],"get-jest-config.js":[function(require,module,exports) {

@@ -36,30 +36,11 @@
   },
   "babel": {
     "presets": [
-      "@tsw38/otis/lib/preset-env",
-      "@tsw38/otis/lib/preset-react"
+      "@tsw38/otis/lib/modules/preset-env",
+      "@tsw38/otis/lib/modules/preset-react"
     ],
     "plugins": [
-      "@tsw38/otis/lib/plugin-transform-react-jsx"
+      "@tsw38/otis/lib/modules/plugin-transform-react-jsx"
     ]
-  },
-  "jest": {
-    "reporters": [
-      [
-        "@tsw38/otis/lib/threshold-ratchet",
-        {
-          "tolerance": 10,
-          "roundDown": true
-        }
-      ]
-    ],
-    "coverageThreshold": {
-      "global": {
-        "lines": 0,
-        "statements": 0,
-        "functions": 23,
-        "branches": 0
-      }
-    }
   }
 }
