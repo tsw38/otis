@@ -80,5 +80,8 @@
         "./bin/cli.js"
       ]
     }
-  ]
+  ],
+  "husky": {
+    "pre-commit": "npm run build"
+  }
 }
