@@ -60,21 +60,30 @@ Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` fil
 
 Examples:
 
-`otis test`       <-- Runs all tests within your application
-`otis test -e`    <-- Runs e2e tests `(cypress run)`
-`otis test -u`    <-- Runs unit tests and collects a coverage report
-`otis test -u -w` <-- Runs unit tests in watch mode
-`otis test -e -w` <-- Runs e2e tests in watch mode `(cypress open)`
+`otis test`
+* Runs all tests within your application
+
+`otis test -e`
+* Runs e2e tests `(cypress run)`
+
+`otis test -u`
+* Runs unit tests and collects a coverage report
+
+`otis test -u -w`
+* Runs unit tests in watch mode
+
+`otis test -e -w`
+* Runs e2e tests in watch mode `(cypress open)`
 
 ### React
 
 These exports are all reexports of these packages simply centralizing them all to one location, all documention can be found below.
 
-[msw](https://www.npmjs.com/package/msw)
-[test-data-bot](https://www.npmjs.com/package/@jackfranklin/test-data-bot)
-[@testing-library/react](https://www.npmjs.com/package/@testing-library/react)
-[@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event)
-[@react-mock/localstorage](https://www.npmjs.com/package/@react-mock/localstorage)
+* [msw](https://www.npmjs.com/package/msw)
+* [test-data-bot](https://www.npmjs.com/package/@jackfranklin/test-data-bot)
+* [@testing-library/react](https://www.npmjs.com/package/@testing-library/react)
+* [@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event)
+* [@react-mock/localstorage](https://www.npmjs.com/package/@react-mock/localstorage)
 
 
 Example:
