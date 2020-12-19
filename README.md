@@ -1,7 +1,129 @@
-# Otis
-___
-## Opinionated Testing Interface System
+<div align="center">
+<h1>🦺 OTIS 🦺</h1>
+<p>Opinionated Testing Interface System</p>
+</div>
 
-TODO:
-* import all needed jest and babel configs
-* write an init script that will automatically add to package json
+-----
+
+## The Problem
+
+Using Jest can get up and running pretty much with no configuration, but when you want to add features, the configuration gets pretty lengthy.
+
+Say, for example, you want to tell jest that it should use a unique config location
+
+`jest --config ./path-to-config`
+
+Say you want to watch changes to your tests or modules AND have a unique config location
+
+`jest --config ./path-to-config --watch`
+
+Now say you want to specify environment variables for a unique config in watch mode
+
+...
+
+You get my point. The script gets pretty lengthy and unreadable overtime.
+
+
+## My Solution
+
+Having implemented testing in several projects I've noticed a very clear pattern forming in what I like in my testing suite and I figured it was a good time to centralize that configuration. Why install all these packages that you have to maintain? That's gross, let something else handle that for you so you can start writing tests immediately.
+
+> **This package is really just for me cuz I'm making a lot of assumptions in here, but if you want to use it, be my guest.**
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+    - [CLI](#usage-cli)
+    - [React](#usage-react)
+    - [Jest](#usage-jest)
+
+## Installation
+
+```shell
+npm install --save-dev @tsw38/otis
+```
+
+## Usage
+
+This package contains one binary executable, one module to use for tests and a couple of jest extensions to add to your testing experiences.
+
+### CLI {#usage-cli}
+
+#### `otis test`
+Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` file.
+
+|    Option    | Alias | Description             |
+| ------------ | ----- | ----------------------- |
+| `--unit`     | `-u`  | only runs unit tests    |
+| `--e2e`      | `-e`  | only runs e2e tests     |
+| `--watch`    | `-w`  | runs test in watch mode |
+
+Examples:
+
+`otis test`       <-- Runs all tests within your application
+`otis test -e`    <-- Runs e2e tests `(cypress run)`
+`otis test -u`    <-- Runs unit tests and collects a coverage report
+`otis test -u -w` <-- Runs unit tests in watch mode
+`otis test -e -w` <-- Runs e2e tests in watch mode `(cypress open)`
+
+### React {#usage-react}
+
+These exports are all reexports of these packages simply centralizing them all to one location, all documention can be found below.
+
+[msw](https://www.npmjs.com/package/msw)
+[test-data-bot](https://www.npmjs.com/package/@jackfranklin/test-data-bot)
+[@testing-library/react](https://www.npmjs.com/package/@testing-library/react)
+[@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event)
+[@react-mock/localstorage](https://www.npmjs.com/package/@react-mock/localstorage)
+
+
+Example:
+
+```jsx
+import {
+    rest,
+    fake,
+    build,
+    screen,
+    render,
+    waitFor,
+    userEvent,
+    setupServer,
+    LocalStorageMock
+} from '@tsw38/otis'
+
+test('', () => {
+
+})
+```
+
+### Jest {#usage-jest}
+
+This package is a zero config extendable testing system, simply install  and you can get going. It will pick up whatever babel and jest configs you have in your application to add to the base defaults that are set up.
+
+#### Threshold Ratchet
+
+|    Option    | Type    | Required? | Default | Description             |
+| ------------ | ------- | --------- | ------- | ----------------------- |
+| `tolerance`  | Number  |    no     |  5      | a coverage buffer to allow some wiggle room in your tests    |
+| `roundDown`  | Boolean |    no     | true    | only runs e2e tests     |
+
+##### `jest.config.json`
+```json
+{
+    "reporters": [
+        "@tsw38/otis/lib/modules/threshold-ratchet"
+    ]
+}
+```
+##### `package.json`
+```json
+{
+    ...
+    "jest": {
+        "reporters": [
+            "@tsw38/otis/lib/modules/threshold-ratchet"
+        ]
+    }
+}
+```
