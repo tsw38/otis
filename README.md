@@ -50,14 +50,18 @@ This package contains one binary executable, one module to use for tests and a c
 
 ### CLI
 
+#### `otis --help`
+Prints out the commands available through the package
+
 #### `otis test`
 Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` file.
 
-|    Option    | Alias | Description             |
-| ------------ | ----- | ----------------------- |
-| `--unit`     | `-u`  | only runs unit tests    |
-| `--e2e`      | `-e`  | only runs e2e tests     |
-| `--watch`    | `-w`  | runs test in watch mode |
+|    Option      | Alias | Description                               |
+| -------------- | ----- | ----------------------------------------- |
+| `--unit`       | `-u`  | only runs unit tests                      |
+| `--e2e`        | `-e`  | only runs e2e tests                       |
+| `--watch`      | `-w`  | runs test in watch mode                   |
+| `--showConfig` |       | prints out the config for jest or cypress |
 
 Examples:
 

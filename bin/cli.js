@@ -130,7 +130,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.showConfig = exports.help = exports.unitTestWatch = exports.unitTest = exports.test = void 0;
+exports.SCOPE = exports.MODE = exports.showConfig = exports.showHelp = exports.test = exports.MODES = exports.SCOPES = void 0;
 
 const argv = require("minimist")(process.argv.slice(2));
 
@@ -143,6 +143,17 @@ const availableOptions = {
   unit: ["-u", "--unit"],
   watch: ["-w", "--watch"]
 };
+const SCOPES = {
+  e2e: "e2e",
+  unit: "unit",
+  both: "both",
+  none: "none"
+};
+exports.SCOPES = SCOPES;
+const MODES = {
+  watch: "watch"
+};
+exports.MODES = MODES;
 
 const findMatchingOption = option => argv[option.replace(/\-/g, "")];
 
@@ -152,14 +163,14 @@ exports.test = test;
 const runE2E = availableOptions.e2e.some(findMatchingOption);
 const runUnit = availableOptions.unit.some(findMatchingOption);
 const runWatch = availableOptions.watch.some(findMatchingOption);
-const unitTest = test && runUnit && !runWatch;
-exports.unitTest = unitTest;
-const unitTestWatch = test && runUnit && runWatch;
-exports.unitTestWatch = unitTestWatch;
-const help = availableOptions.help.some(findMatchingOption);
-exports.help = help;
-const showConfig = argv.showConfig;
+const showHelp = availableOptions.help.some(findMatchingOption);
+exports.showHelp = showHelp;
+const showConfig = argv.config;
 exports.showConfig = showConfig;
+const MODE = runWatch ? MODES.watch : "";
+exports.MODE = MODE;
+const SCOPE = runE2E && runUnit ? SCOPES.both : runE2E && !runUnit ? SCOPES.e2e : !runE2E && runUnit ? SCOPES.unit : SCOPES.none;
+exports.SCOPE = SCOPE;
 },{}],"../../jest.config.json":[function(require,module,exports) {
 module.exports = {
   "clearMocks": true,
@@ -226,15 +237,18 @@ const clone = require("clone-deep");
  * @returns void
  */
 const mergeJestConfigs = () => new Promise(resolve => {
+  const rootDir = process.env.PWD;
   const jestConfig = (0, _getJestConfig.getJestConfig)();
   const isPackageJson = jestConfig.includes("package.json");
 
   if (fs.existsSync(jestConfig)) {
     const projectConfig = JSON.parse(fs.readFileSync(jestConfig, "utf-8"));
-    const mergedConfigs = merge(_jestConfig.default, { ...clone(isPackageJson ? projectConfig.jest : projectConfig),
-      rootDir: process.env.PWD
-    }); // console.log(mergedConfigs);
-
+    const mergedConfigs = merge({ ..._jestConfig.default,
+      // next remove paths in roots that does exist in project
+      roots: _jestConfig.default.roots.filter(root => fs.existsSync(`${rootDir}/${root.replace("<rootDir>", "")}`))
+    }, { ...clone(isPackageJson ? projectConfig.jest : projectConfig),
+      rootDir
+    });
     fs.writeFileSync(`${process.env.TMPDIR}/jest.config.json`, JSON.stringify(mergedConfigs), "utf-8");
   }
 
@@ -304,26 +318,44 @@ const sections = [{
   header: "OTIS",
   content: "An opinionated testing interface system"
 }, {
-  header: "otis test",
+  header: "Available Commands",
+  content: [{
+    name: "test",
+    summary: "Runs the testing suite"
+  }, {
+    name: "--help",
+    summary: "Seems a bit self explanatory"
+  }].map(({
+    name,
+    summary
+  }) => ({
+    name,
+    summary
+  }))
+}, {
+  header: "Command: 'otis test'",
   optionList: [{
     name: "unit",
     alias: "u",
-    typeLabel: "  string",
+    typeLabel: " bool",
     description: "Runs the jest unit tests looking for any .spec.js or .spec.jsx file"
   }, {
     name: "e2e",
     alias: "e",
-    typeLabel: "   string",
+    typeLabel: "  bool",
     description: "Runs the cypress end to end tests looking for any .e2e.js or .e2e.jsx file"
   }, {
     name: "watch",
     alias: "w",
-    typeLabel: " string",
+    typeLabel: "bool",
     description: "Used in conjunction with the unit/e2e command to run jest/cypress in watch/open mode"
-  }, {
-    name: "showConfig",
-    typeLabel: "string",
-    description: "prints out the extended jest configuration for your tests"
+  }]
+}, {
+  header: "Command: 'otis (-u | -e)'",
+  optionList: [{
+    name: "config",
+    typeLabel: "bool",
+    description: "Prints the extended jest/cypress configuration for your tests"
   }]
 }];
 
@@ -342,19 +374,34 @@ var _commandLineOptions = _interopRequireDefault(require("./command-line-options
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (_commands.help) {
-  (0, _commandLineOptions.default)();
-}
+switch (_commands.SCOPE) {
+  case _commands.SCOPES.unit:
+    // otis test -u -w
+    if (_commands.test && _commands.MODE === _commands.MODES.watch) {
+      (0, _unit.runUnitTestsWatch)();
+      break;
+    } // otis test -u
 
-if (_commands.showConfig) {
-  (0, _unit.showJestConfig)();
-}
 
-if (_commands.unitTest) {
-  (0, _unit.runUnitTests)();
-}
+    if (_commands.test) {
+      (0, _unit.runUnitTests)();
+      break;
+    } // otis -u --config
 
-if (_commands.unitTestWatch) {
-  (0, _unit.runUnitTestsWatch)();
+
+    if (_commands.showConfig) {
+      (0, _unit.showJestConfig)();
+      break;
+    }
+
+    break;
+
+  default:
+    // otis --help
+    if (_commands.showHelp) {
+      (0, _commandLineOptions.default)();
+      break;
+    }
+
 }
 },{"./commands.js":"commands.js","./unit":"unit.js","./command-line-options":"command-line-options.js"}]},{},["index.js"], null)

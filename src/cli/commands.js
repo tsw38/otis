@@ -10,6 +10,18 @@ const availableOptions = {
   unit: ["-u", "--unit"],
   watch: ["-w", "--watch"],
 };
+
+export const SCOPES = {
+  e2e: "e2e",
+  unit: "unit",
+  both: "both",
+  none: "none",
+};
+
+export const MODES = {
+  watch: "watch",
+};
+
 const findMatchingOption = (option) => argv[option.replace(/\-/g, "")];
 
 export const test = argv._.includes(availableArgs.test);
@@ -18,7 +30,16 @@ const runE2E = availableOptions.e2e.some(findMatchingOption);
 const runUnit = availableOptions.unit.some(findMatchingOption);
 const runWatch = availableOptions.watch.some(findMatchingOption);
 
-export const unitTest = test && runUnit && !runWatch;
-export const unitTestWatch = test && runUnit && runWatch;
-export const help = availableOptions.help.some(findMatchingOption);
-export const showConfig = argv.showConfig;
+export const showHelp = availableOptions.help.some(findMatchingOption);
+export const showConfig = argv.config;
+
+export const MODE = runWatch ? MODES.watch : "";
+
+export const SCOPE =
+  runE2E && runUnit
+    ? SCOPES.both
+    : runE2E && !runUnit
+    ? SCOPES.e2e
+    : !runE2E && runUnit
+    ? SCOPES.unit
+    : SCOPES.none;
