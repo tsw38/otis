@@ -7,26 +7,25 @@
 
 ## The Problem
 
-Using Jest can get up and running pretty much with no configuration, but when you want to add features, the configuration gets pretty lengthy.
+With using jest, you can get up and running pretty much with no configuration, but when you want to add features, the configuration gets pretty lengthy.
 
 Say, for example, you want to tell jest that it should use a unique config location
 
 `jest --config ./path-to-config`
 
-Say you want to watch changes to your tests or modules AND have a unique config location
+Say you want to watch changes to your tests or modules AND have a unique config location and you want to collect coverage on those tests and you want a specific set of coverage reporters
 
-`jest --config ./path-to-config --watch`
-
-Now say you want to specify environment variables for a unique config in watch mode
+`jest --config ./path-to-config --watch --coverage --reporters="default" --reporters="jest-junit"`
 
 ...
 
-You get my point. The script gets pretty lengthy and unreadable overtime.
+You get my point. The script gets pretty lengthy and unreadable overtime. And it makes the package.json scripts get pretty ugly.
 
+Yes a lot of these settings can be defined in jest.config or package.json, but wouldn't it be great to not have to think about any of these configurations and have someone tell you what you could use?
 
 ## My Solution
 
-Having implemented testing in several projects I've noticed a very clear pattern forming in what I like in my testing suite and I figured it was a good time to centralize that configuration. Why install all these packages that you have to maintain? That's gross, let something else handle that for you so you can start writing tests immediately.
+Having implemented testing in several projects I've noticed a pattern forming in what I like in my testing suite and I figured it was a good time to centralize that configuration. Why install all these packages that you have to maintain? That's gross, let something else handle that for you so you can start writing tests immediately.
 
 > **This package is really just for me cuz I'm making a lot of assumptions in here, but if you want to use it, be my guest.**
 
@@ -56,12 +55,12 @@ Prints out the commands available through the package
 #### `otis test`
 Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` file.
 
-|    Option      | Alias | Description                               |
-| -------------- | ----- | ----------------------------------------- |
-| `--unit`       | `-u`  | only runs unit tests                      |
-| `--e2e`        | `-e`  | only runs e2e tests                       |
-| `--watch`      | `-w`  | runs test in watch mode                   |
-| `--showConfig` |       | prints out the config for jest or cypress |
+|   Option   | Alias | Description                               |
+| ---------- | ----- | ----------------------------------------- |
+| `--unit`   | `-u`  | only runs unit tests                      |
+| `--e2e`    | `-e`  | only runs e2e tests                       |
+| `--watch`  | `-w`  | runs test in watch mode                   |
+| `--config` |       | prints out the config for jest or cypress |
 
 Examples:
 
