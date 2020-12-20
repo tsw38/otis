@@ -64,7 +64,7 @@ Examples:
 `otis test`
 * Runs all tests within your application
 
-`otis test -e`
+**TODO** `otis test -e`
 * Runs e2e tests `(cypress run)`
 
 `otis test -u`
@@ -73,7 +73,7 @@ Examples:
 `otis test -u -w`
 * Runs unit tests in watch mode
 
-`otis test -e -w`
+**TODO** `otis test -e -w`
 * Runs e2e tests in watch mode `(cypress open)`
 
 ### React
@@ -85,7 +85,6 @@ These exports are all reexports of these packages simply centralizing them all t
 * [@testing-library/react](https://www.npmjs.com/package/@testing-library/react)
 * [@testing-library/user-event](https://www.npmjs.com/package/@testing-library/user-event)
 * [@react-mock/localstorage](https://www.npmjs.com/package/@react-mock/localstorage)
-
 
 Example:
 
@@ -99,6 +98,10 @@ import {
     waitFor,
     userEvent,
     setupServer,
+    testDataBot: {
+        build,
+        fake
+    }
     LocalStorageMock
 } from '@tsw38/otis'
 
