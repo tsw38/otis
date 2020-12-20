@@ -275,11 +275,13 @@ const {
 const jestPath = `${PWD}/node_modules/@tsw38/otis/node_modules/.bin/jest`;
 const jestConfig = `${process.env.TMPDIR}jest.config.json`;
 
-const buildFork = watching => mergeJestConfigs().then(() => fork(jestPath, [watching ? "--watch" : "", `--config=${jestConfig}`], {
+const buildFork = watching => mergeJestConfigs().then(() => fork(jestPath, [watching ? "--watch" : "--coverage", `--config=${jestConfig}`], {
   env: { ...process.env,
     NODE_ENV: "test",
     JEST_TEST: true,
-    DEBUG_PRINT_LIMIT: -1
+    ...(watching ? {
+      DEBUG_PRINT_LIMIT: -1
+    } : {})
   }
 }));
 

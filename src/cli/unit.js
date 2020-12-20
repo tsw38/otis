@@ -10,14 +10,18 @@ const jestConfig = `${process.env.TMPDIR}jest.config.json`;
 
 const buildFork = (watching) =>
   mergeJestConfigs().then(() =>
-    fork(jestPath, [watching ? "--watch" : "", `--config=${jestConfig}`], {
-      env: {
-        ...process.env,
-        NODE_ENV: "test",
-        JEST_TEST: true,
-        DEBUG_PRINT_LIMIT: -1,
-      },
-    })
+    fork(
+      jestPath,
+      [watching ? "--watch" : "--coverage", `--config=${jestConfig}`],
+      {
+        env: {
+          ...process.env,
+          NODE_ENV: "test",
+          JEST_TEST: true,
+          ...(watching ? { DEBUG_PRINT_LIMIT: -1 } : {}),
+        },
+      }
+    )
   );
 
 const runUnitTests = () => {
