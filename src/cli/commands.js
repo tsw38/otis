@@ -10,7 +10,6 @@ const availableOptions = {
   unit: ["-u", "--unit"],
   watch: ["-w", "--watch"],
 };
-
 const findMatchingOption = (option) => argv[option.replace(/\-/g, "")];
 
 export const test = argv._.includes(availableArgs.test);
@@ -22,3 +21,4 @@ const runWatch = availableOptions.watch.some(findMatchingOption);
 export const unitTest = test && runUnit && !runWatch;
 export const unitTestWatch = test && runUnit && runWatch;
 export const help = availableOptions.help.some(findMatchingOption);
+export const showConfig = argv.showConfig;

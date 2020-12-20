@@ -3,15 +3,27 @@
   "resetMocks": true,
   "moduleDirectories": [
     "node_modules",
+    "<rootDir>/src/js/",
     "<rootDir>/src",
-    "<rootDir>/src/js",
     "<rootDir>/__test__",
-    "<rootDir"
+    "<rootDir>"
   ],
   "moduleFileExtensions": [
     "js",
     "jsx",
     "json"
+  ],
+  "roots": [
+    "<rootDir>/node_modules",
+    "<rootDir>/src/js/",
+    "<rootDir>/src",
+    "<rootDir>"
+  ],
+  "modulePaths": [
+    "<rootDir>/node_modules",
+    "<rootDir>/src/js/",
+    "<rootDir>/src",
+    "<rootDir>"
   ],
   "moduleNameMapper": {
     "\\.(svg|css)$": "@tsw38/otis/lib/modules/map-to-string",
