@@ -3,10 +3,10 @@ import { help, unitTest, unitTestWatch, showConfig } from "./commands.js";
 
 import { runUnitTests, runUnitTestsWatch, showJestConfig } from "./unit";
 
-import logOtisOptions from "./log-options";
+import cliOptions from "./command-line-options";
 
 if (help) {
-  logOtisOptions();
+  cliOptions();
 }
 
 if (showConfig) {

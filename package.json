@@ -48,6 +48,7 @@
     "@testing-library/user-event": "12.6.0",
     "@tsw38/custom-logger": "2.0.0",
     "chalk": "4.1.0",
+    "command-line-usage": "6.1.1",
     "cypress": "6.1.0",
     "identity-obj-proxy": "3.0.0",
     "is-cli": "2.0.0",

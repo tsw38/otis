@@ -290,7 +290,7 @@ module.exports = {
   showJestConfig,
   runUnitTestsWatch
 };
-},{"./merge-jest-configs":"merge-jest-configs.js"}],"log-options.js":[function(require,module,exports) {
+},{"./merge-jest-configs":"merge-jest-configs.js"}],"command-line-options.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -298,11 +298,37 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-const logOptions = () => {
-  console.log("options");
-};
+const commandLineUsage = require("command-line-usage");
 
-var _default = logOptions;
+const sections = [{
+  header: "OTIS",
+  content: "An opinionated testing interface system"
+}, {
+  header: "otis test",
+  optionList: [{
+    name: "unit",
+    alias: "u",
+    typeLabel: "  string",
+    description: "Runs the jest unit tests looking for any .spec.js or .spec.jsx file"
+  }, {
+    name: "e2e",
+    alias: "e",
+    typeLabel: "   string",
+    description: "Runs the cypress end to end tests looking for any .e2e.js or .e2e.jsx file"
+  }, {
+    name: "watch",
+    alias: "w",
+    typeLabel: " string",
+    description: "Used in conjunction with the unit/e2e command to run jest/cypress in watch/open mode"
+  }, {
+    name: "showConfig",
+    typeLabel: "string",
+    description: "prints out the extended jest configuration for your tests"
+  }]
+}];
+
+var _default = () => console.log(commandLineUsage(sections));
+
 exports.default = _default;
 },{}],"index.js":[function(require,module,exports) {
 
@@ -312,12 +338,12 @@ var _commands = require("./commands.js");
 
 var _unit = require("./unit");
 
-var _logOptions = _interopRequireDefault(require("./log-options"));
+var _commandLineOptions = _interopRequireDefault(require("./command-line-options"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 if (_commands.help) {
-  (0, _logOptions.default)();
+  (0, _commandLineOptions.default)();
 }
 
 if (_commands.showConfig) {
@@ -331,4 +357,4 @@ if (_commands.unitTest) {
 if (_commands.unitTestWatch) {
   (0, _unit.runUnitTestsWatch)();
 }
-},{"./commands.js":"commands.js","./unit":"unit.js","./log-options":"log-options.js"}]},{},["index.js"], null)
+},{"./commands.js":"commands.js","./unit":"unit.js","./command-line-options":"command-line-options.js"}]},{},["index.js"], null)
