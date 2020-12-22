@@ -3,7 +3,7 @@ const merge = require("deepmerge");
 const clone = require("clone-deep");
 
 import defaultConfig from "../../jest.config.json";
-import { getJestConfig } from "./get-jest-config";
+import { getJestConfig } from "./get-jest-config-path";
 
 /**
  * writes a merge jest config into temporary scratch
@@ -14,14 +14,15 @@ export const mergeJestConfigs = () =>
     const rootDir = process.env.PWD;
     const jestConfig = getJestConfig();
     const isPackageJson = jestConfig.includes("package.json");
+    let mergedConfigs = defaultConfig;
 
     if (fs.existsSync(jestConfig)) {
       const projectConfig = JSON.parse(fs.readFileSync(jestConfig, "utf-8"));
 
-      const mergedConfigs = merge(
+      // next remove paths in roots that does exist in project
+      mergedConfigs = merge(
         {
           ...defaultConfig,
-          // next remove paths in roots that does exist in project
           roots: defaultConfig.roots.filter((root) =>
             fs.existsSync(`${rootDir}/${root.replace("<rootDir>", "")}`)
           ),
@@ -31,13 +32,13 @@ export const mergeJestConfigs = () =>
           rootDir,
         }
       );
-
-      fs.writeFileSync(
-        `${process.env.TMPDIR}/jest.config.json`,
-        JSON.stringify(mergedConfigs),
-        "utf-8"
-      );
     }
+
+    fs.writeFileSync(
+      `${process.env.TMPDIR}/jest.config.json`,
+      JSON.stringify(mergedConfigs),
+      "utf-8"
+    );
 
     resolve({});
   });

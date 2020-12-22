@@ -10,6 +10,7 @@ import {
 } from "./commands.js";
 
 import { runUnitTests, runUnitTestsWatch, showJestConfig } from "./unit";
+import { runE2ETests, runE2ETestsWatch, showCypressConfig } from "./e2e";
 
 import cliOptions from "./command-line-options";
 
@@ -31,6 +32,22 @@ switch (SCOPE) {
       break;
     }
     break;
+  case SCOPES.e2e:
+    // otis test -e -w
+    if (test && MODE === MODES.watch) {
+      runE2ETestsWatch();
+      break;
+    }
+    // otis test -e
+    if (test) {
+      runE2ETests();
+      break;
+    }
+    // otis -e --config
+    if (showConfig) {
+      showCypressConfig();
+      break;
+    }
   default:
     // otis --help
     if (showHelp) {
