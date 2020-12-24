@@ -1,14 +1,9 @@
 {
     "viewportWidth": 1080,
     "viewportHeight": 1080,
-    "video": false,
-    "screenshotOnRunFailure": true,
-    "ignoreTestFiles": ["**/__snapshots__/*", "**/__image_snapshots__/*"],
+    "video": true,
     "nodeVersion": "system",
-    "fixturesFolder": "__test__/fixtures",
-    "ignoreTestFiles": [
-        "**/**/*.{spec,test}.{js,jsx}"
-    ],
+    "screenshotOnRunFailure": true,
     "integrationFolder": "cypress/e2e",
-    "testFiles": ["*.e2e.js","*.e2e.jsx"]
+    "fixturesFolder": "__test__/fixtures"
   }

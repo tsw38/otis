@@ -1,3 +1,9 @@
 {
-    "baseUrl": "http://localhost:3000"
+    "baseUrl": "http://localhost:5000",
+    "viewportWidth": 1280,
+    "viewportHeight": 1080,
+    "video": false,
+    "nodeVersion": "system",
+    "fixturesFolder": "__test__/fixtures",
+    "integrationFolder": "cypress/e2e"
 }

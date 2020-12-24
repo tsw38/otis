@@ -12,8 +12,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "otis test -u",
-    "test:watch": "npm t -- -w",
+    "test:server": "npm run build && serve -s build",
+    "test": "otis test",
+    "test:watch": "otis test -w",
+    "test:e2e": "otis test -e --startCommand=test:server",
+    "test:unit": "otis test -u",
+    "test:e2e:watch": "npm run test:e2e -- -w",
+    "test:unit:watch": "otis test -u -w",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,5 +66,8 @@
         "branches": 0
       }
     }
+  },
+  "devDependencies": {
+    "serve": "^11.3.2"
   }
 }

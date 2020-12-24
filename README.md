@@ -55,20 +55,25 @@ Prints out the commands available through the package
 #### `otis test`
 Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` file.
 
-|   Option   | Alias | Description                               |
-| ---------- | ----- | ----------------------------------------- |
-| `--unit`   | `-u`  | only runs unit tests                      |
-| `--e2e`    | `-e`  | only runs e2e tests                       |
-| `--watch`  | `-w`  | runs test in watch mode                   |
-| `--config` |       | prints out the config for jest or cypress |
+|   Option         | Alias | Description                               |
+| ---------------- | ----- | ----------------------------------------- |
+| `--unit`         | `-u`  | only runs unit tests                      |
+| `--e2e`          | `-e`  | only runs e2e tests                       |
+| `--watch`        | `-w`  | runs test in watch mode                   |
+| `--config`       |       | prints out the config for jest or cypress |
+| `--startCommand` |       | an optional flag for pointing e2e test to a local start server command  |
 
 Examples:
 
-**TODO** `otis test`
+`otis test`
 * Runs all tests within your application
 
-**TODO** `otis test -e`
+`otis test -e`
 * Runs e2e tests `(cypress run)`
+> **This is currently broken for CRA apps spinning up dev servers**
+
+`otis test -e --startCommand=test:server`
+* Runs e2e tests and instead of using `npm start` use `npm run test:server`
 
 `otis test -u`
 * Runs unit tests and collects a coverage report
@@ -76,8 +81,10 @@ Examples:
 `otis test -u -w`
 * Runs unit tests in watch mode
 
-**TODO** `otis test -e -w`
+`otis test -e -w`
 * Runs e2e tests in watch mode `(cypress open)`
+> **This is currently broken for CRA apps spinning up dev servers**
+
 
 ### React
 
@@ -147,3 +154,4 @@ This package is a zero config extendable testing system, simply install  and you
 ## TODO
 * Allow for multiple jest configs for a project (client | server)
   - [Testing Javascript](https://testingjavascript.com/lessons/jest-support-running-multiple-configurations-with-jest-s-projects-feature)
+* Do not run E2E test suite with `otis test` if there are no `.e2e.js(x)?` files in the app or if there is a cypress configuration which a different rule for the tests, they are not present

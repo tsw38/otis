@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+const { log } = require("@tsw38/custom-logger");
+
 import {
   test,
   MODE,
@@ -12,7 +14,7 @@ import {
 import { runUnitTests, runUnitTestsWatch, showJestConfig } from "./unit";
 import { runE2ETests, runE2ETestsWatch, showCypressConfig } from "./e2e";
 
-import cliOptions from "./command-line-options";
+import help from "./help";
 
 switch (SCOPE) {
   case SCOPES.unit:
@@ -48,10 +50,37 @@ switch (SCOPE) {
       showCypressConfig();
       break;
     }
+
+  case SCOPES.none:
+  case SCOPES.both:
   default:
+    // otis test
+    if (test) {
+      runUnitTests()
+        .then((errorCode) => {
+          if (!!errorCode) {
+            throw new Error("Unit Tests Failed");
+          }
+          return;
+        })
+        .then(runE2ETests)
+        .then((errorCode) => {
+          if (!!errorCode) {
+            throw new Error("E2E Tests Failed");
+          }
+          return;
+        })
+        .catch((err) => {
+          log(err.message || err, {
+            type: "error",
+            header: "Otis - Error",
+          });
+        });
+      break;
+    }
     // otis --help
     if (showHelp) {
-      cliOptions();
+      help();
       break;
     }
 }
