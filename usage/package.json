@@ -15,7 +15,7 @@
     "test:server": "npm run build && serve -s build",
     "test": "otis test",
     "test:watch": "otis test -w",
-    "test:e2e": "otis test -e --startCommand=test:server",
+    "test:e2e": "otis test -e --start-command=test:server",
     "test:unit": "otis test -u",
     "test:e2e:watch": "npm run test:e2e -- -w",
     "test:unit:watch": "otis test -u -w",

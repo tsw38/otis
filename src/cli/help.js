@@ -43,7 +43,7 @@ const sections = [
           "Used in conjunction with the unit/e2e command to run jest/cypress in watch/open mode",
       },
       {
-        name: "startCommand",
+        name: "start-command",
         typeLabel: "string",
         description:
           "(optional) flag to pass a custom start command other than your projects `npm start` for running E2E tests against",

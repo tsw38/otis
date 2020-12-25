@@ -403,6 +403,10 @@ const mergeCypressConfigs = () => new Promise(resolve => {
 
 exports.mergeCypressConfigs = mergeCypressConfigs;
 },{"../../cypress.json":"../../cypress.json","./get-cypress-config-path":"get-cypress-config-path.js"}],"e2e.js":[function(require,module,exports) {
+const fs = require("fs");
+
+const glob = require("glob");
+
 const {
   fork
 } = require("child_process");
@@ -434,13 +438,28 @@ const configToString = config => Object.entries(config).map(([key, value]) => {
 
 const buildFork = async watching => {
   const config = await mergeCypressConfigs();
+  let runE2ETests = false;
+
+  if (config.testFiles) {
+    runE2ETests = Boolean(glob.sync(`${PWD}/${config.testFiles}`).length);
+  } else {
+    runE2ETests = Boolean(fs.readdirSync(`${PWD}/${config.integrationFolder}`).length);
+  }
+
+  if (!runE2ETests) {
+    log(`No E2E tests found ${Boolean(config.testFiles) ? `with pattern: ${config.testFiles}` : `in directory: ${PWD}/${config.integrationFolder}`}`, {
+      header: "Otis - E2E Tests"
+    });
+    return;
+  }
+
   const localServer = isLocalServer(config);
   const mode = watching ? "open" : "run";
   const cypressConfig = `${configToString(config)}`;
   let childProcess;
 
   if (localServer) {
-    childProcess = fork(ssatPath, [argv.startCommand || "start", (config.baseUrl || "").split(":")[2] || 3000, `${cypressPath} ${mode} ${cypressConfig}`]);
+    childProcess = fork(ssatPath, [argv["start-command"] || "start", (config.baseUrl || "").split(":")[2] || 3000, `${cypressPath} ${mode} ${cypressConfig}`]);
   } else {
     childProcess = fork(cypressPath, [mode, cypressConfig]);
   }
@@ -540,7 +559,7 @@ const sections = [{
     typeLabel: "   bool",
     description: "Used in conjunction with the unit/e2e command to run jest/cypress in watch/open mode"
   }, {
-    name: "startCommand",
+    name: "start-command",
     typeLabel: "string",
     description: "(optional) flag to pass a custom start command other than your projects `npm start` for running E2E tests against"
   }]

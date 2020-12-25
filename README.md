@@ -55,13 +55,13 @@ Prints out the commands available through the package
 #### `otis test`
 Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` file.
 
-|   Option         | Alias | Description                               |
-| ---------------- | ----- | ----------------------------------------- |
-| `--unit`         | `-u`  | only runs unit tests                      |
-| `--e2e`          | `-e`  | only runs e2e tests                       |
-| `--watch`        | `-w`  | runs test in watch mode                   |
-| `--config`       |       | prints out the config for jest or cypress |
-| `--startCommand` |       | an optional flag for pointing e2e test to a local start server command  |
+|   Option          | Alias | Description                               |
+| ----------------- | ----- | ----------------------------------------- |
+| `--unit`          | `-u`  | only runs unit tests                      |
+| `--e2e`           | `-e`  | only runs e2e tests                       |
+| `--watch`         | `-w`  | runs test in watch mode                   |
+| `--config`        |       | prints out the config for jest or cypress |
+| `--start-command` |       | an optional flag for pointing e2e test to a local start server command  |
 
 Examples:
 
@@ -72,7 +72,7 @@ Examples:
 * Runs e2e tests `(cypress run)`
 > **This is currently broken for CRA apps spinning up dev servers**
 
-`otis test -e --startCommand=test:server`
+`otis test -e --start-command=test:server`
 * Runs e2e tests and instead of using `npm start` use `npm run test:server`
 
 `otis test -u`

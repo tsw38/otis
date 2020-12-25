@@ -1,3 +1,5 @@
+const fs = require("fs");
+const glob = require("glob");
 const { fork } = require("child_process");
 const { log } = require("@tsw38/custom-logger");
 const argv = require("minimist")(process.argv.slice(2));
@@ -7,7 +9,6 @@ const { mergeCypressConfigs } = require("./merge-cypress-configs");
 const { PWD } = process.env;
 
 const binPath = `${PWD}/node_modules/@tsw38/otis/node_modules/.bin`;
-
 const cypressPath = `${binPath}/cypress`;
 const ssatPath = `./node_modules/@tsw38/otis/node_modules/.bin/start-server-and-test`;
 
@@ -22,6 +23,29 @@ const configToString = (config) =>
 
 const buildFork = async (watching) => {
   const config = await mergeCypressConfigs();
+  let runE2ETests = false;
+
+  if (config.testFiles) {
+    runE2ETests = Boolean(glob.sync(`${PWD}/${config.testFiles}`).length);
+  } else {
+    runE2ETests = Boolean(
+      fs.readdirSync(`${PWD}/${config.integrationFolder}`).length
+    );
+  }
+
+  if (!runE2ETests) {
+    log(
+      `No E2E tests found ${
+        Boolean(config.testFiles)
+          ? `with pattern: ${config.testFiles}`
+          : `in directory: ${PWD}/${config.integrationFolder}`
+      }`,
+      {
+        header: "Otis - E2E Tests",
+      }
+    );
+    return;
+  }
 
   const localServer = isLocalServer(config);
   const mode = watching ? "open" : "run";
@@ -31,7 +55,7 @@ const buildFork = async (watching) => {
 
   if (localServer) {
     childProcess = fork(ssatPath, [
-      argv.startCommand || "start",
+      argv["start-command"] || "start",
       (config.baseUrl || "").split(":")[2] || 3000,
       `${cypressPath} ${mode} ${cypressConfig}`,
     ]);
