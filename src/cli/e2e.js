@@ -8,9 +8,8 @@ const { mergeCypressConfigs } = require("./merge-cypress-configs");
 
 const { PWD } = process.env;
 
-const binPath = `${PWD}/node_modules/@tsw38/otis/node_modules/.bin`;
-const cypressPath = `${binPath}/cypress`;
-const ssatPath = `./node_modules/@tsw38/otis/node_modules/.bin/start-server-and-test`;
+const cypressPath = `${PWD}/node_modules/.bin/cypress`;
+const ssatPath = `./node_modules/.bin/start-server-and-test`;
 
 const isLocalServer = ({ baseUrl }) => /local.+\:\d{4,}/.test(baseUrl);
 

@@ -5,7 +5,7 @@ const { mergeJestConfigs } = require("./merge-jest-configs");
 
 const { PWD } = process.env;
 
-const jestPath = `${PWD}/node_modules/@tsw38/otis/node_modules/.bin/jest`;
+const jestPath = `${PWD}/node_modules/.bin/jest`;
 const jestConfig = `${process.env.TMPDIR}jest.config.json`;
 
 const buildFork = async (watching) => {
