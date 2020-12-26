@@ -9,7 +9,7 @@ const jestPath = `${PWD}/node_modules/.bin/jest`;
 const jestConfig = `${process.env.TMPDIR}jest.config.json`;
 
 const buildFork = async (watching) => {
-  const mergedConfig = await mergeJestConfigs();
+  // const mergedConfig = await mergeJestConfigs();
 
   const childProcess = fork(
     jestPath,
