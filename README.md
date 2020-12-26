@@ -27,7 +27,7 @@ Yes a lot of these settings can be defined in jest.config or package.json, but w
 
 Having implemented testing in several projects I've noticed a pattern forming in what I like in my testing suite and I figured it was a good time to centralize that configuration. Why install all these packages that you have to maintain? That's gross, let something else handle that for you so you can start writing tests immediately.
 
-> **This package is really just for @spothero/fe-*, control-panel and consumer-web cuz I'm making a lot of assumptions in here, but if you want to use it, be my guest.**
+> **This package is really just for me cuz I'm making a lot of assumptions in here, but if you want to use it, be my guest.**
 
 ## Table of Contents
 - [Installation](#installation)
