@@ -41,11 +41,11 @@
   },
   "babel": {
     "presets": [
-      "@tsw38/otis/lib/modules/preset-env",
-      "@tsw38/otis/lib/modules/preset-react"
+      "@babel/preset-env",
+      "@babel/preset-react"
     ],
     "plugins": [
-      "@tsw38/otis/lib/modules/plugin-transform-react-jsx"
+      "@babel/plugin-transform-react-jsx"
     ]
   },
   "jest": {
