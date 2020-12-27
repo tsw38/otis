@@ -103,16 +103,12 @@ Example:
 import {
     rest,
     fake,
-    build,
     screen,
     render,
     waitFor,
     userEvent,
     setupServer,
-    testDataBot: {
-        build,
-        fake
-    }
+    buildFakeModel,
     LocalStorageMock
 } from '@tsw38/otis'
 
