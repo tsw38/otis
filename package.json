@@ -1,6 +1,6 @@
 {
   "name": "@tsw38/otis",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An opinionated React testing package",
   "bin": {
     "otis": "bin/cli.js"
