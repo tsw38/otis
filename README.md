@@ -55,13 +55,14 @@ Prints out the commands available through the package
 #### `otis test`
 Runs the testing suite within your codebase, finds any `.(spec|test).js(x)?` file.
 
-|   Option          | Alias | Description                               |
-| ----------------- | ----- | ----------------------------------------- |
-| `--unit`          | `-u`  | only runs unit tests                      |
-| `--e2e`           | `-e`  | only runs e2e tests                       |
-| `--watch`         | `-w`  | runs test in watch mode                   |
-| `--config`        |       | prints out the config for jest or cypress |
-| `--start-command` |       | an optional flag for pointing e2e test to a local start server command  |
+|   Option          | Alias | Test Type | Description                                                       |
+| ----------------- | ----- | ---- | ---------------------------------------------------------------------- |
+| `--unit`          | `-u`  |      | only runs unit tests                                                   |
+| `--e2e`           | `-e`  |      | only runs e2e tests                                                    |
+| `--watch`         | `-w`  |      | runs test in watch mode                                                |
+| `--only-related`  | `-r`  |      | finds and runs only the related tests for the code changes             |
+| `--config`        |       |      | prints out the config for jest or cypress                              |
+| `--start-command` |       |      | an optional flag for pointing e2e test to a local start server command |
 
 Examples:
 

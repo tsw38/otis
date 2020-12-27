@@ -1,5 +1,6 @@
 const { fork } = require("child_process");
 const { log } = require("@tsw38/custom-logger");
+const argv = require("minimist")(process.argv.slice(2));
 
 const { mergeJestConfigs } = require("./merge-jest-configs");
 
@@ -8,18 +9,27 @@ const { PWD } = process.env;
 const jestPath = `${PWD}/node_modules/.bin/jest`;
 const jestConfig = `${process.env.TMPDIR}jest.config.json`;
 
-const buildFork = async (watching) => {
-  const mergedConfig = await mergeJestConfigs();
+const options = {
+  related: ["-r", "--only-related"],
+};
+const runOnlyRelated = options.related.some(
+  (option) => argv[option.replace(/^\-{1,}/, "")]
+);
 
+const buildFork = async (isWatching) => {
   const childProcess = fork(
     jestPath,
-    [watching ? "--watch" : "--coverage", `--config=${jestConfig}`],
+    [
+      isWatching ? "--watch" : "--coverage",
+      ...[runOnlyRelated ? `--findRelatedTests ${PWD}` : ""],
+      `--config=${jestConfig}`,
+    ],
     {
       env: {
         ...process.env,
         NODE_ENV: "test",
         JEST_TEST: true,
-        ...(watching ? { DEBUG_PRINT_LIMIT: -1 } : {}),
+        ...(isWatching ? { DEBUG_PRINT_LIMIT: -1 } : {}),
       },
     }
   );

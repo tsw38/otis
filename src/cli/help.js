@@ -51,6 +51,18 @@ const sections = [
     ],
   },
   {
+    header: "Command: 'otis -u'",
+    optionList: [
+      {
+        name: "only-related",
+        alias: "r",
+        typeLabel: "bool",
+        description:
+          "Finds and runs only the related tests for the code changes",
+      },
+    ],
+  },
+  {
     header: "Command: 'otis (-u | -e)'",
     optionList: [
       {

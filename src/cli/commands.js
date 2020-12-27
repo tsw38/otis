@@ -22,7 +22,7 @@ export const MODES = {
   watch: "watch",
 };
 
-const findMatchingOption = (option) => argv[option.replace(/\-/g, "")];
+const findMatchingOption = (option) => argv[option.replace(/^\-{1,}/, "")];
 
 export const test = argv._.includes(availableArgs.test);
 
