@@ -155,4 +155,3 @@ This package is a zero config extendable testing system, simply install  and you
 ## TODO
 * Allow for multiple jest configs for a project (client | server)
   - [Testing Javascript](https://testingjavascript.com/lessons/jest-support-running-multiple-configurations-with-jest-s-projects-feature)
-* Do not run E2E test suite with `otis test` if there are no `.e2e.js(x)?` files in the app or if there is a cypress configuration which a different rule for the tests, they are not present
