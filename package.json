@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "WATCH=true node parcel.bundler.js",
     "build": "node parcel.bundler.js",
-    "prepublish": "npm run build",
-    "publish": "npm publish --access public"
+    "prerelease": "npm run build",
+    "release": "npm publish --access public"
   },
   "repository": {
     "type": "git",
