@@ -25,13 +25,6 @@ const getJestPath = () => {
 };
 
 const buildFork = async (isWatching) => {
-  console.log(
-    [
-      isWatching ? "--watch" : "--coverage",
-      ...[runOnlyRelated ? `--findRelatedTests ${PWD}` : ""],
-      `--config=${jestConfig}`,
-    ].filter(Boolean)
-  );
   const childProcess = fork(
     getJestPath(),
     [
