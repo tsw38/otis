@@ -27,16 +27,16 @@
   ],
   "moduleNameMapper": {
     "\\.(svg|css)$": "@tsw38/otis/lib/modules/map-to-string",
-    "\\.scss$": "identity-obj-proxy"
+    "\\.scss$": "@tsw38/otis/lib/modules/identity-obj-proxy"
   },
   "globalSetup": "@tsw38/otis/lib/modules/global-setup",
   "setupFiles": [
-    "jest-date-mock"
+    "@tsw38/otis/lib/modules/jest-date-mock"
   ],
   "setupFilesAfterEnv": [
-    "jest-extended",
-    "jest-chain",
-    "@testing-library/jest-dom/extend-expect"
+    "@tsw38/otis/lib/modules/jest-extended",
+    "@tsw38/otis/lib/modules/jest-chain",
+    "@tsw38/otis/lib/modules/jest-extend-expect"
   ],
   "reporters": [
     "default"
@@ -52,8 +52,8 @@
     "json-summary"
   ],
   "watchPlugins": [
-    "jest-watch-typeahead/filename",
-    "jest-watch-typeahead/testname"
+    "@tsw38/otis/lib/modules/watch-typeahead-filename",
+    "@tsw38/otis/lib/modules/watch-typeahead-testname"
   ],
   "testPathIgnorePatterns": [
     "cypress/*",

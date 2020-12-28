@@ -1,3 +1,4 @@
+const fs = require("fs");
 const { fork } = require("child_process");
 const { log } = require("@tsw38/custom-logger");
 const argv = require("minimist")(process.argv.slice(2));
@@ -6,7 +7,6 @@ const { mergeJestConfigs } = require("./merge-jest-configs");
 
 const { PWD } = process.env;
 
-const jestPath = `${PWD}/node_modules/.bin/jest`;
 const jestConfig = `${process.env.TMPDIR}jest.config.json`;
 
 const options = {
@@ -16,14 +16,29 @@ const runOnlyRelated = options.related.some(
   (option) => argv[option.replace(/^\-{1,}/, "")]
 );
 
+const getJestPath = () => {
+  const parentPath = `${PWD}/node_modules/.bin/jest`;
+
+  return fs.existsSync(parentPath)
+    ? parentPath
+    : `${PWD}/node_modules/@tsw38/otis/node_modules/.bin/jest`;
+};
+
 const buildFork = async (isWatching) => {
-  const childProcess = fork(
-    jestPath,
+  console.log(
     [
       isWatching ? "--watch" : "--coverage",
       ...[runOnlyRelated ? `--findRelatedTests ${PWD}` : ""],
       `--config=${jestConfig}`,
-    ],
+    ].filter(Boolean)
+  );
+  const childProcess = fork(
+    getJestPath(),
+    [
+      isWatching ? "--watch" : "--coverage",
+      ...[runOnlyRelated ? `--findRelatedTests ${PWD}` : ""],
+      `--config=${jestConfig}`,
+    ].filter(Boolean),
     {
       env: {
         ...process.env,
@@ -59,7 +74,6 @@ const runUnitTests = async () => {
   log("Running Unit Tests", {
     header: "Otis - Unit Tests",
   });
-
   return await buildFork();
 };
 
@@ -68,12 +82,12 @@ const runUnitTestsWatch = async () => {
     header: "Otis - Unit Tests",
   });
 
-  return await buildFork(true);
+  // return await buildFork(true);
 };
 
 const showJestConfig = () =>
   mergeJestConfigs().then(() =>
-    fork(jestPath, [`--config=${jestConfig}`, "--showConfig"])
+    fork(getJestPath(), [`--config=${jestConfig}`, "--showConfig"])
   );
 
 module.exports = {
