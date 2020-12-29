@@ -75,7 +75,7 @@ const runUnitTestsWatch = async () => {
     header: "Otis - Unit Tests",
   });
 
-  // return await buildFork(true);
+  return await buildFork(true);
 };
 
 const showJestConfig = () =>
