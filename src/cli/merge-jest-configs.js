@@ -1,9 +1,12 @@
 const fs = require("fs");
+const mkdirp = require("mkdirp");
 const merge = require("deepmerge");
 const clone = require("clone-deep");
 
 import defaultConfig from "../../jest.config.json";
 import { getJestConfig } from "./get-jest-config-path";
+
+const cacheDir = `${process.env.PWD}/node_modules/@tsw38/otis/.cache`;
 
 /**
  * writes a merge jest config into temporary scratch
@@ -34,8 +37,10 @@ export const mergeJestConfigs = () =>
       );
     }
 
+    mkdirp.sync(cacheDir);
+
     fs.writeFileSync(
-      `${process.env.TMPDIR}/jest.config.json`,
+      `${cacheDir}/jest.config.json`,
       JSON.stringify(mergedConfigs),
       "utf-8"
     );

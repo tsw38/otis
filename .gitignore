@@ -7,3 +7,4 @@ node_modules
 usage/cypress/integration
 usage/cypress/videos
 .eslintcache
+.cache

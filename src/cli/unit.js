@@ -7,7 +7,7 @@ const { mergeJestConfigs } = require("./merge-jest-configs");
 
 const { PWD } = process.env;
 
-const jestConfig = `${process.env.TMPDIR}jest.config.json`;
+const jestConfig = `${process.env.PWD}/node_modules/@tsw38/otis/.cache/jest.config.json`;
 
 const options = {
   related: ["-r", "--only-related"],
@@ -29,7 +29,7 @@ const buildFork = async (isWatching) => {
     getJestPath(),
     [
       isWatching ? "--watch" : "--coverage",
-      ...[runOnlyRelated ? `--findRelatedTests ${PWD}` : ""],
+      runOnlyRelated ? `--findRelatedTests ${PWD}` : "",
       `--config=${jestConfig}`,
     ].filter(Boolean),
     {
@@ -67,7 +67,7 @@ const runUnitTests = async () => {
   log("Running Unit Tests", {
     header: "Otis - Unit Tests",
   });
-  return await buildFork();
+  return await mergeJestConfigs().then(buildFork);
 };
 
 const runUnitTestsWatch = async () => {
@@ -75,7 +75,7 @@ const runUnitTestsWatch = async () => {
     header: "Otis - Unit Tests",
   });
 
-  return await buildFork(true);
+  return await mergeJestConfigs().then(() => buildFork(true));
 };
 
 const showJestConfig = () =>
