@@ -67,7 +67,7 @@ const runUnitTests = async () => {
   log("Running Unit Tests", {
     header: "Otis - Unit Tests",
   });
-  return await mergeJestConfigs().then(buildFork);
+  return await mergeJestConfigs().then(() => buildFork());
 };
 
 const runUnitTestsWatch = async () => {
