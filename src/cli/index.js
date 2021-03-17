@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-const { log } = require("@tsw38/custom-logger");
-
+import { log } from "@tsw38/custom-logger";
 import {
   test,
   MODE,

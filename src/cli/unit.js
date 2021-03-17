@@ -63,14 +63,14 @@ const buildFork = async (isWatching) => {
   });
 };
 
-const runUnitTests = async () => {
+export const runUnitTests = async () => {
   log("Running Unit Tests", {
     header: "Otis - Unit Tests",
   });
   return await mergeJestConfigs().then(() => buildFork());
 };
 
-const runUnitTestsWatch = async () => {
+export const runUnitTestsWatch = async () => {
   log("Watching Unit Tests", {
     header: "Otis - Unit Tests",
   });
@@ -78,13 +78,7 @@ const runUnitTestsWatch = async () => {
   return await mergeJestConfigs().then(() => buildFork(true));
 };
 
-const showJestConfig = () =>
+export const showJestConfig = () =>
   mergeJestConfigs().then(() =>
     fork(getJestPath(), [`--config=${jestConfig}`, "--showConfig"])
   );
-
-module.exports = {
-  runUnitTests,
-  showJestConfig,
-  runUnitTestsWatch,
-};
