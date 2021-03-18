@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { fork } = require("child_process");
-const { log } = require("@tsw38/custom-logger");
 const argv = require("minimist")(process.argv.slice(2));
+const { log } = require("@tsw38/custom-logger");
 
 const { mergeJestConfigs } = require("./merge-jest-configs");
 
@@ -62,23 +62,26 @@ const buildFork = async (isWatching) => {
     return errorCode;
   });
 };
-
-export const runUnitTests = async () => {
+const runUnitTests = async () => {
   log("Running Unit Tests", {
     header: "Otis - Unit Tests",
   });
   return await mergeJestConfigs().then(() => buildFork());
 };
-
-export const runUnitTestsWatch = async () => {
+const runUnitTestsWatch = async () => {
   log("Watching Unit Tests", {
     header: "Otis - Unit Tests",
   });
 
   return await mergeJestConfigs().then(() => buildFork(true));
 };
-
-export const showJestConfig = () =>
+const showJestConfig = () =>
   mergeJestConfigs().then(() =>
     fork(getJestPath(), [`--config=${jestConfig}`, "--showConfig"])
   );
+
+module.exports = {
+  runUnitTests,
+  runUnitTestsWatch,
+  showJestConfig,
+};

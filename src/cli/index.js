@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { log } from "@tsw38/custom-logger";
-import {
+const { log } = require("@tsw38/custom-logger");
+
+const {
   test,
   MODE,
   SCOPE,
@@ -8,12 +9,12 @@ import {
   SCOPES,
   showHelp,
   showConfig,
-} from "./commands.js";
+} = require("./commands");
 
-import { runUnitTests, runUnitTestsWatch, showJestConfig } from "./unit";
-import { runE2ETests, runE2ETestsWatch, showCypressConfig } from "./e2e";
+const { runUnitTests, runUnitTestsWatch, showJestConfig } = require("./unit");
+const { runE2ETests, runE2ETestsWatch, showCypressConfig } = require("./e2e");
 
-import help from "./help";
+const { help } = require("./help");
 
 switch (SCOPE) {
   case SCOPES.unit:

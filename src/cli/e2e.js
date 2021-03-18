@@ -81,24 +81,30 @@ const buildFork = async (watching) => {
   });
 };
 
-export const runE2ETests = async () => {
+const runE2ETests = async () => {
   log("Running E2E Tests", {
     header: "Otis - E2E Tests",
   });
   await buildFork();
 };
 
-export const runE2ETestsWatch = async () => {
+const runE2ETestsWatch = async () => {
   log("Watching E2E Tests", {
     header: "Otis - E2E Tests",
   });
   await buildFork(true);
 };
 
-export const showCypressConfig = () => {
+const showCypressConfig = () => {
   mergeCypressConfigs().then(({ config }) => {
     log(JSON.stringify(config, null, 2), {
       header: "Otis",
     });
   });
+};
+
+module.exports = {
+  runE2ETests,
+  runE2ETestsWatch,
+  showCypressConfig,
 };

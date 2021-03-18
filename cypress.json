@@ -1,9 +1,9 @@
 {
-    "viewportWidth": 1080,
-    "viewportHeight": 1080,
-    "video": true,
-    "nodeVersion": "system",
-    "screenshotOnRunFailure": true,
-    "integrationFolder": "cypress/e2e",
-    "fixturesFolder": "__test__/fixtures"
-  }
+  "viewportWidth": 1080,
+  "viewportHeight": 1080,
+  "video": true,
+  "nodeVersion": "system",
+  "screenshotOnRunFailure": true,
+  "integrationFolder": "cypress/e2e",
+  "fixturesFolder": "__test__/fixtures"
+}

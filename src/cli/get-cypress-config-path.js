@@ -1,6 +1,6 @@
-import fs from "fs";
+const fs = require("fs");
 
-export const getCypressConfigPath = () => {
+const getCypressConfigPath = () => {
   const PWD = process.env.PWD;
 
   const cypressConfigPath = `${PWD}/cypress.json`;
@@ -8,4 +8,8 @@ export const getCypressConfigPath = () => {
   return fs.existsSync(cypressConfigPath)
     ? cypressConfigPath
     : `${PWD}/package.json`;
+};
+
+module.exports = {
+  getCypressConfigPath,
 };

@@ -2,8 +2,8 @@ const fs = require("fs");
 const merge = require("deepmerge");
 const clone = require("clone-deep");
 
-import defaultConfig from "../../cypress.json";
-import { getCypressConfigPath } from "./get-cypress-config-path";
+const defaultConfig = require("../../cypress.json");
+const { getCypressConfigPath } = require("./get-cypress-config-path");
 
 /**
  * writes a merge jest config into temporary scratch
@@ -11,7 +11,7 @@ import { getCypressConfigPath } from "./get-cypress-config-path";
  */
 
 // replace all relative paths or <rootDirs> with PWD
-export const mergeCypressConfigs = () =>
+const mergeCypressConfigs = () =>
   new Promise((resolve) => {
     const cypressConfig = getCypressConfigPath();
     const isPackageJson = cypressConfig.includes("package.json");
@@ -28,3 +28,5 @@ export const mergeCypressConfigs = () =>
     // provide all of the config options as an object so it can be used in the fork command
     resolve(mergedConfigs);
   });
+
+module.exports = { mergeCypressConfigs };

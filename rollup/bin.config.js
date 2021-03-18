@@ -1,13 +1,16 @@
+import path from "path";
 import pkg from "../package.json";
+import json from "@rollup/plugin-json";
 import babel from "@rollup/plugin-babel";
 import alias from "@rollup/plugin-alias";
 import { terser } from "rollup-plugin-terser";
 import commonjs from "@rollup/plugin-commonjs";
+import executable from "rollup-plugin-executable";
 import resolve from "@rollup/plugin-node-resolve";
 import shebang from "rollup-plugin-preserve-shebang";
 import external from "rollup-plugin-peer-deps-external";
 
-const extensions = [".jsx", ".js", ".ts", ".tsx", ".json"];
+const extensions = [".json", ".jsx", ".js", ".ts", ".tsx"];
 
 const handleConsoles = (warning, log) => {
   const ignoreCodeList = [
@@ -34,8 +37,13 @@ export default {
   },
   plugins: [
     shebang(),
+    executable(),
+    json(),
     alias({
       resolve: extensions,
+      entries: {
+        cli: path.resolve(CWD, "./src/cli"),
+      },
     }),
     babel({
       ...pkg.babel,
@@ -47,7 +55,7 @@ export default {
     resolve({
       extensions,
       dedupe: [pkg.name],
-      preferBuiltins: false,
+      // preferBuiltins: false,
     }),
     commonjs({
       extensions,

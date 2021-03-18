@@ -75,4 +75,8 @@ const sections = [
   },
 ];
 
-export default () => console.log(commandLineUsage(sections));
+const help = () => console.log(commandLineUsage(sections));
+
+module.exports = {
+  help,
+};
