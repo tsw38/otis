@@ -52,7 +52,7 @@
   "jest": {
     "reporters": [
       [
-        "@tsw38/otis/lib/modules/threshold-ratchet",
+        "@tsw38/otis/threshold-ratchet",
         {
           "tolerance": 10,
           "roundDown": true

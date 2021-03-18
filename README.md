@@ -132,7 +132,7 @@ This package is a zero config extendable testing system, simply install  and you
 ```json
 {
     "reporters": [
-        "@tsw38/otis/lib/modules/threshold-ratchet"
+        "@tsw38/otis/threshold-ratchet"
     ]
 }
 ```
@@ -142,7 +142,7 @@ This package is a zero config extendable testing system, simply install  and you
     ...
     "jest": {
         "reporters": [
-            "@tsw38/otis/lib/modules/threshold-ratchet"
+            "@tsw38/otis/threshold-ratchet"
         ]
     }
 }

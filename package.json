@@ -1,6 +1,6 @@
 {
   "name": "@tsw38/otis",
-  "version": "1.0.10-beta.6",
+  "version": "1.0.10-beta.7",
   "description": "An opinionated React testing package",
   "bin": {
     "otis": "src/cli/index.js"
