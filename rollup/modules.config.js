@@ -1,9 +1,10 @@
 import fs from "fs";
 import pkg from "../package.json";
-import babel from "rollup-plugin-babel";
+
+import babel from "@rollup/plugin-babel";
 import alias from "@rollup/plugin-alias";
 import { terser } from "rollup-plugin-terser";
-import commonjs from "rollup-plugin-commonjs";
+import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import visualizer from "rollup-plugin-visualizer";
 import external from "rollup-plugin-peer-deps-external";
@@ -47,7 +48,7 @@ const files = fileNames.map((file) => {
       }),
       babel({
         ...pkg.babel,
-        runtimeHelpers: true,
+        babelHelpers: "inline",
         exclude: "node_modules/**",
         plugins: ["@babel/plugin-proposal-class-properties"],
       }),
@@ -59,16 +60,6 @@ const files = fileNames.map((file) => {
       }),
       commonjs({
         extensions,
-        namedExports: {
-          "node_modules/lz-string/libs/lz-string.js": [
-            "compressToEncodedURIComponent",
-          ],
-          "node_modules/jest-date-mock/lib/index.js": [
-            "advanceTo",
-            "advanceBy",
-            "clear",
-          ],
-        },
       }),
       process.env.NODE_ENV !== "development" && terser(),
       visualizer({

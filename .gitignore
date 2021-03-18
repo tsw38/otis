@@ -5,6 +5,7 @@ dist
 /.cache
 bin
 lib
+rollup/stats
 usage/cypress/integration
 usage/cypress/videos
 .eslintcache
