@@ -8,7 +8,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "dev": "WATCH=true node parcel.bundler.js",
-    "build": "npm run build:m && npm run build:b",
+    "build": "npm run build:m",
     "build:b": "rollup --config rollup/bin.config.js",
     "build:m": "rollup --config rollup/modules.config.js",
     "changelog": "auto-changelog -p && git add CHANGELOG.md"
