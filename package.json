@@ -5,7 +5,7 @@
   "bin": {
     "otis": "src/cli/index.js"
   },
-  "main": "./index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "dev": "WATCH=true node parcel.bundler.js",
     "build": "npm run build:m && npm run build:b",

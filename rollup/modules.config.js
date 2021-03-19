@@ -40,7 +40,7 @@ const files = fileNames.map((file) => {
       format: "cjs",
       sourcemap: true,
       exports: "auto",
-      file: `${CWD}/${file}`,
+      file: `${CWD}/lib/${file}`,
     },
     plugins: [
       alias({
