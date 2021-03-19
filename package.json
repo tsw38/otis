@@ -1,6 +1,6 @@
 {
   "name": "@tsw38/otis",
-  "version": "1.0.10-beta.10",
+  "version": "1.0.10-beta.11",
   "description": "An opinionated React testing package",
   "bin": {
     "otis": "src/cli/index.js"
@@ -14,11 +14,8 @@
     "prerelease": "npm run build",
     "release": "npm publish --access public",
     "changelog": "auto-changelog -p && git add CHANGELOG.md",
-    "pre:major": "npm run changelog",
     "major": "release major",
-    "pre:minor": "npm run changelog",
     "minor": "release minor",
-    "pre:patch": "npm run changelog",
     "patch": "release patch",
     "beta": "release pre beta"
   },
