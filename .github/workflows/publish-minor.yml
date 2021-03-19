@@ -28,8 +28,8 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
-      - run: npm run minor
-      - run: npm run release
+      - run: npm version minor
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -44,7 +44,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm run build
-      - run: npm run minor
-      - run: npm run release
+      - run: npm version minor
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_TOKEN}}

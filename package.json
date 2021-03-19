@@ -11,13 +11,7 @@
     "build": "npm run build:m && npm run build:b",
     "build:b": "rollup --config rollup/bin.config.js",
     "build:m": "rollup --config rollup/modules.config.js",
-    "prerelease": "npm run build",
-    "release": "npm publish --access public",
-    "changelog": "auto-changelog -p && git add CHANGELOG.md",
-    "major": "release major",
-    "minor": "release minor",
-    "patch": "release patch",
-    "beta": "release pre beta"
+    "changelog": "auto-changelog -p && git add CHANGELOG.md"
   },
   "repository": {
     "type": "git",
@@ -41,7 +35,6 @@
     "deepmerge": "4.2.2",
     "eslint": "7.15.0",
     "eslint-plugin-jest": "24.1.3",
-    "husky": "4.3.6",
     "parcel-bundler": "1.12.4",
     "parcel-plugin-shebang": "1.3.1",
     "prettier": "2.2.1",
@@ -116,10 +109,5 @@
         "./bin/cli.js"
       ]
     }
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run build && git add ."
-    }
-  }
+  ]
 }

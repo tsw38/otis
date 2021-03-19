@@ -5,7 +5,7 @@ name: Node.js Package
 
 on:
   push:
-    branches: [ main ]
+    branches: [ patch ]
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
-      - run: npm version major
+      - run: npm version patch
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -44,7 +44,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm run build
-      - run: npm version major
+      - run: npm version patch
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GIT_TOKEN}}
